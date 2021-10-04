@@ -1,6 +1,6 @@
 ---
 title: "Week 3 Coding Exercise - Questions"
-author: "Grady"
+author: "Haryo Prabowo"
 date: "9/4/2021"
 output: html_document
 ---
