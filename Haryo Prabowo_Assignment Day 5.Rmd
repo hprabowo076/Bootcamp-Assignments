@@ -1,0 +1,48 @@
+---
+title: "Haryo Prabowo_Assignment Day 5"
+author: "Haryo Prabowo"
+date: "19/09/2021"
+output: html_document
+---
+Mengecek apakah rata-rata berat tikus sama/tidak dengan data sumber yaitu 25 kg??
+
+```{r}
+set.seed(1234) 
+my_data <- data.frame( name = paste0(rep("M_", 10), 1:10), weight = round(rnorm(10, 20, 2), 1) )
+
+summary(my_data)
+
+boxplot(my_data$weight,
+        main = "Berat Tikus",
+        ylab = "Freq.",
+        xlab = "Berat (kg)",
+        col = "orange",
+        border = "brown",
+        horizontal = TRUE
+)
+
+
+hist(my_data$weight,
+     main = "Berat Tikus",
+     ylab = "Freq.",
+     xlab = "Berat (kg)",
+     col = "orange",
+     border = "brown",
+     xlim=c(10,30)
+     )
+
+
+```
+Interpretasi:
+Grafik boxplot dan histogram memperlihatkan bahwa data berat tikus memiliki skew negatif, karena adanya tikus dengan berat yang di bawah IQR. Mean dan Median juga menunjukkan bahwa mayoritas tikus memiliki berat 18-21 kg, dan data tidak terdistribusi normal.
+
+```{r}
+tikus<-t.test(my_data$weight, mu=25)
+tikus
+pvalue<-tikus$p.value
+print(pvalue < 0.05)
+```
+Interpretasi:
+Dengan hasil p value < 0.05, jika confidence level 95%, maka null hypothesis ditolak.
+Berarti, rata-rata berat tikus tidak sama dengan data sumber (bukan 25kg).
+
