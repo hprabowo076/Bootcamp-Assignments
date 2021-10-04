@@ -1,2 +1,2 @@
-# assignments
-Bootcamp projects and assignments
+# Dibimbing.id Data Science Bootcamp
+Data Science Bootcamp projects and assignments
