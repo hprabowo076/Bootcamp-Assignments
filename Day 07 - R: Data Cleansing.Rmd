@@ -1,5 +1,5 @@
 ---
-title: "Homework Day .7"
+title: "Homework Day 7: Data Cleansing"
 author: "Haryo Prabowo"
 date: "26/09/2021"
 output: html_document
