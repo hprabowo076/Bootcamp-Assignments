@@ -1,0 +1,80 @@
+---
+title: "Homework Day .7"
+author: "Haryo Prabowo"
+date: "26/09/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+```
+
+# HOME WORK----
+
+Menggunakan data yang sama
+
+1. Pada kolom customerID ubah menjadi numeric dengan menghilangkan semua non angka
+2. Ubah MonthlyCharges dan TotalCharges menjadi numeric
+3. Buat variable baru MonthlyChargesGroup dimana angka di grouping per 50 dan kelipatannya.
+4. Ubah LastTransactionDate menjadi tanggal dan ganti NA dengan nilai minimal (min) 
+5. Perbaiki kolom PaymentMethod "--" menjadi NA
+6. Hilangkan semua observasi/row dimana PaymentMethod adalah NA
+
+Batasan
+
+1. Jumlah kolom hanya akan ada 7
+2. Jumlah baris hanya akan ada 7
+
+```{r HOME WORK}
+df <- read_csv("https://raw.githubusercontent.com/dioariadi/dibimbing/main/data_cleansing_raw%20-%20Sheet1.csv")
+```
+
+1. Pada kolom customerID ubah menjadi numeric dengan menghilangkan semua non angka
+```{r}
+df <- df %>% 
+  separate(col = customerID,into = c("customerID"))
+df <- df %>% mutate(customerID = replace(customerID, customerID == "na", NA),
+         customerID = replace(customerID, customerID == "N/A", NA),
+         customerID = as.numeric(customerID))
+```
+
+2. Ubah MonthlyCharges dan TotalCharges menjadi numeric
+```{r}
+df <- df %>% mutate(MonthlyCharges = replace(MonthlyCharges, MonthlyCharges == "na", NA),
+         MonthlyCharges = replace(MonthlyCharges, MonthlyCharges == "N/A", NA),
+         MonthlyCharges = as.numeric(MonthlyCharges))
+df <- df %>% mutate(TotalCharges = replace(TotalCharges, TotalCharges == "na", NA),
+         TotalCharges = replace(TotalCharges, TotalCharges == "N/A", NA),
+         TotalCharges = as.numeric(TotalCharges))
+```
+
+3. Buat variable baru MonthlyChargesGroup dimana angka di grouping per 50 dan kelipatannya.
+```{r}
+df <- df %>% mutate(MonthlyChargesGroup = MonthlyCharges%/%50)
+```
+
+4. Ubah LastTransactionDate menjadi tanggal dan ganti NA dengan nilai minimal (min) 
+```{r}
+df <- df %>%
+  mutate(LastTransactionDate = ymd(LastTransactionDate),
+         LastTransactionDate = replace(LastTransactionDate, is.na(LastTransactionDate), min(df$LastTransactionDate, na.rm = TRUE)))
+
+```
+
+5. Perbaiki kolom PaymentMethod "--" menjadi NA
+```{r}
+df <- df %>%
+  mutate(PaymentMethod=replace(PaymentMethod, PaymentMethod == "--", NA)) 
+```
+
+6. Hilangkan semua observasi/row dimana PaymentMethod adalah NA
+```{r}
+df <- df %>% filter(!is.na(PaymentMethod))
+```
+
+```{r}
+print(df)
+```
+
